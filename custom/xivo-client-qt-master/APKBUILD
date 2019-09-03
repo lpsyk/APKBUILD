@@ -1,0 +1,32 @@
+# Contributor: Mohamed LADGHEM <m.ladghem@protonmail.com>
+# Maintainer: Mohamed LADGHEM <m.ladghem@protonmail.com>
+pkgname="xivo-client-qt-master"
+pkgver="19.5"
+pkgrel=19
+pkgdesc="XiVO Client is an application connected to the XiVO server."
+url="https://projects.xivo.solutions/"
+arch="x86_64"
+license="GPLv3"
+depends=""
+makedepends="qt5-qttools qt5-qttools-dev qt5-qtbase qt5-qtsvg-dev make"
+install="${pkgname}.post-install ${pkgname}.post-deinstall"
+source="https://gitlab.com/xivo.solutions/xivo-client-qt/-/archive/master/${pkgname}.tar.gz"
+builddir="$srcdir/${pkgname}"
+export LD_LIBRARY_PATH="${builddir}/bin"	
+
+build() {
+	/usr/lib/qt5/bin/qmake
+	sed -i "s#GIT_DIR=.*#GIT_DIR=${builddir}#" ${builddir}/versions.mak
+	make
+}
+
+
+
+package() {
+	mkdir -p "${pkgdir}/var/opt/"
+	cd "${builddir}"
+	cp -rv "${builddir}/" "${pkgdir}/var/opt/"
+	export LD_LIBRARY_PATH="${pkgdir}/var/opt/${pkgname}/bin"	
+}
+
+sha512sums="d37474b1d52c39dc9432941133b312f39208c3d9af938a42f381d68895fff4a398524277c610b948254e757a8e34c1047b15adec70e93eb71e1744385fa4fa87  xivo-client-qt-master.tar.gz"

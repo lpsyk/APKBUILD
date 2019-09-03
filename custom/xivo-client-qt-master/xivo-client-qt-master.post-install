@@ -1,0 +1,5 @@
+#!/bin/sh
+echo "LD_LIBRARY_PATH=\"/var/opt/xivo-client-qt-master/bin\" /var/opt/xivo-client-qt-master/bin/xivoclient \$@" > /usr/bin/xivo
+chmod +x /usr/bin/xivo
+
+
